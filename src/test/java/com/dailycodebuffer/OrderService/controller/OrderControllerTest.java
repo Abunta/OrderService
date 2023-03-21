@@ -62,7 +62,7 @@ public class OrderControllerTest {
             = WireMockExtension.newInstance()
             .options(WireMockConfiguration
                     .wireMockConfig()
-                    .port(8080))
+                    .port(8081))
             .build();
 
     private ObjectMapper objectMapper
@@ -136,7 +136,7 @@ public class OrderControllerTest {
                 .build();
     }
 
-    //@Test
+    @Test
     public void test_WhenPlaceOrder_DoPayment_Success() throws Exception {
         //First Place Order
         // Get Order by Order Id from Db and check

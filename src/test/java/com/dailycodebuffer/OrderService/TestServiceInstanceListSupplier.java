@@ -24,7 +24,7 @@ implements ServiceInstanceListSupplier {
                 "payment-service-svc",
                 "payment-service-svc",
                 "localhost",
-                8080,
+                8081,
                 false
         ));
 
@@ -32,7 +32,7 @@ implements ServiceInstanceListSupplier {
                 "product-service-svc",
                 "product-service-svc",
                 "localhost",
-                8080,
+                8081,
                 false
         ));
 

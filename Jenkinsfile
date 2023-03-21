@@ -9,11 +9,22 @@ node {
             userRemoteConfigs: [[credentialsId: 'git',
              url: 'https://github.com/Abunta/OrderService.git']]])
     }
-    stage('Build and Push image') {
+    stage('Build') {
+        sh "${mvnCMD} clean install"
+    }
+    stage('SonarQube analysis') {
+        withSonarQubeEnv('Sonar') {
+            sh "${mvnCMD} sonar:sonar"
+        }
+    }
+    stage('Quality gate') {
+        waitForQualityGate abortPipeline: true
+    }
+    stage('Push image') {
         withCredentials([file(credentialsId: 'gcp', variable: 'GC_KEY')]) {
             sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
             sh 'gcloud auth configure-docker europe-central2-docker.pkg.dev'
-            sh "${mvnCMD} clean install jib:build -DREPO_URL=${REGISTRY_URL}/${PROJECT_ID}/${ARTIFACT_REGISTRY}"
+            sh "${mvnCMD} jib:build -DREPO_URL=${REGISTRY_URL}/${PROJECT_ID}/${ARTIFACT_REGISTRY}"
         }
     }
     stage('Deploy') {
