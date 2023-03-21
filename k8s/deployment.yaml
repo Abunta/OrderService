@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: order-service-app
-          image: alexubuntu227/orderservice
+          image: IMAGE_URL/orderservice
           imagePullPolicy: Always
           ports:
             - containerPort: 8082
